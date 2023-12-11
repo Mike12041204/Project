@@ -1,0 +1,83 @@
+--- Project Rationale ---
+
+Q1 - The most frequent operation?
+The most frequent operation that is expected to happen within our program is the 
+purchasing of tickets or the entering of a group into a theater. In this method
+finding the seats that are available for this group will be the most important step.
+To accomodate this we created a stack of all the empty seats in a theater which if 
+maintained properly provides us with constant time access to as many seats as we
+want.
+
+We think this will be the primary operation because all individuals entering the 
+theater must buy a ticket. For Enter theater only all groups have to enter a line. 
+For exit theater, all individuals of the group must exit but not all groups must exit 
+before closing which will be clear, so not all individuals must leave. While all
+customers in line do not have to enter a theater from the sample runs it seems most 
+of the customers in line will enter a theater, while many who have entered will not
+leave. We will be looking for open seats a significant number of times throughout
+the program.
+
+Q2 - What ADT's?
+The ADTs we are going to be using are list, queue, and stack. We plan to use lists 
+and stack in the theater, and queue in line. The cinema itself with also have a list.
+
+Q3 - What ADT instances?
+We are going to be using two lists and one queue in the theater class. One list will
+be used to store the customers in the theater, where the index of the list 
+corresponds to the seating number. Another, sorted, list will be used to store class 
+Customer which will store the name of the customer buying the ticket and 
+seatings for each member of the group. A stack will be used to store remaining 
+tickets to check if seats are available or not. When a customer leaves, the seat 
+can be stored back in the stack. The cinema will also have a sorted array of all the
+customer names, which can be used to determine whether or not that customer has
+already enetered the theater.
+
+Q4 - Method planning
+0.       End the program.
+    Clear all data structures, end program.
+
+1.       Customer(s) enter(s) Movie Theater.
+	Customer will be enqueued onto one the queues of the theater. A customer object 
+    must be given as input. The cinema will add their name to its existing customers list to keep track that they have entered the theater.
+
+2.       Customer buys ticket(s).
+	A customer will buy k tickets. k empty seats will be popped from the empty seat 
+    queue in the Theater. These will be used to assign names to the Theater seat 
+    List. They will also be used to update the Customer which will then be inserted 
+    into sorted order in the Theater order map List. We can check the cinemas 
+    existing customer list to determine if they are a duplicate.
+
+3.       Customer(s) leave(s) the theater.
+	We can search the Theater customer map to find the location of all members of 
+    the group. We can then push those seats back onto the Theatre empty seat stack 
+    and wipe the names from the Theatre seating List. We will need to be provided 
+    the Customer name to be leaving. We can also remove the customer from the 
+    cinemas existing customers list.
+
+4.       Display info about customers waiting for tickets.
+	We can just print all the Queue collections that represent the Theatres lines.
+
+5.       Display seating chart for Barbie Movie Theater.
+	We can just print the Theatre seating List for the Barbie Movie.
+
+6.       Display seating chart for Oppenheimer Movie Theater.
+    We can just print the Theatre seating List for the Oppenheimer Movie.
+
+7.       Display number of tickets sold and total earnings.
+	These will be variables that are continually updated as tickets are bought 
+    throughout the lifespan of the program.
+
+Q5 - What classes?
+Classes we will be using are Theater class, Line class, Customer class, and the 
+driver class. Theater class will be responsible for keeping track of customers who 
+bought tickets, and there will be two theater classes, one for each movie. The 
+theater class will have a method to print the seating chart for the movie and also 
+methods to manage the customers. The theater class will also store the number of 
+tickets sold. The line class will be responsible for keeping track of customers 
+waiting in the line using the queue. The customer class will be responsible for 
+storing the name of the customer buying the ticket, and the number of people in the 
+group as well as if the group includes children aged 11 or under. The customer 
+class will also be a comparable class which will be used in the second list of the 
+theater to store customer’s name as the key and the group’s seat numbers as the 
+value, which will be sorted to make it easier to find the seat numbers when given 
+the customer's name.
