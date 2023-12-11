@@ -1,3 +1,5 @@
+import Structures.AscendinglyOrderedList;
+
 public class Cinema {
     private double pricerPerTicket;
     private int ticketCount1;
@@ -12,6 +14,9 @@ public class Cinema {
     // line order is 1 -> 2 -> P
     private int lineOrder;
 
+    // sorted list of all customers in cinema used to determine duplicate keys
+    private AscendinglyOrderedList<Customer, String> existingCustomers;
+
     public Cinema(int t1_width, int t1_height, int t2_width, int t2_height, double pricePerTicket)
     {
         ticketCount1 = 0;
@@ -25,6 +30,8 @@ public class Cinema {
         theater2 = new Theater(t2_width, t2_height, "Oppenheimer");
 
         lineOrder = 0;
+
+        existingCustomers = new AscendinglyOrderedList<>();
     }
 
     public void setLineOrder(int order)
@@ -32,27 +39,37 @@ public class Cinema {
         lineOrder = order;
     }
 
-    public void enterLine(Customer customer)
+    // returns 0 if in p, 1 if in l1, 2 if in l2
+    public int enterLine(Customer customer)
     {
+        int result;
+
         int s1 = line1.size();
         int s2 = line2.size();
         int s3 = linep.size();
         // UNSURE - ensure this condition is correct
-        if(customer.getHasChild() && s3 >= s1<<1 && s3 >= s2<<1)
+        if(customer.getHasChild() && !(s1 <= s3 / 2 && s2 <= s3 / 2))
         {
             linep.enter(customer);
+            result = 0;
         }
         else
         {
             if(s2 < s1)
             {
                 line2.enter(customer);
+                result = 2;
             }
             else
             {
                 line1.enter(customer);
+                result = 1;
             }
         }
+
+        existingCustomers.add(customer);
+
+        return result;
     }
 
     public Customer getNextCustomer()
@@ -83,8 +100,10 @@ public class Cinema {
             default:
                 lineOrder = 0;
             }
-            lineOrder = (lineOrder + 1) % 3;
         }
+        lineOrder = (lineOrder + 1) % 3;
+
+        existingCustomers.remove(existingCustomers.search(customer.getKey()));
 
         return customer;
     }
@@ -98,17 +117,13 @@ public class Cinema {
             theater2.enterTheater(customer);
             ticketCount2 += customer.getSize();
         }
+
+        existingCustomers.add(customer);
     }
 
-    // returns 0 if name not in any theater, 1 if in theater 1, 2 if in theater 2
-    public int hasCustomerName(String name)
+    public boolean hasCustomerName(String name)
     {
-        if(theater1.hasName(name)){
-            return 1;
-        }else if(theater2.hasName(name)){
-            return 2;
-        }
-        return 0;
+        return existingCustomers.search(name) > -1;
     }
 
     public void exitCustomer(String customerName)
@@ -118,6 +133,8 @@ public class Cinema {
         }else{
             theater2.exitTheater(customerName);
         }
+
+        existingCustomers.remove(existingCustomers.search(customerName));
     }
 
     public String lineDetails()
@@ -125,32 +142,32 @@ public class Cinema {
         StringBuilder sb = new StringBuilder();
         
         if(line1.size() == 0){
-            sb.append("No customers in the first line!\n");
+            sb.append("\tNo customers in the first line!\n");
         }else{
             if(line1.size() == 1){
-                sb.append("The following customer is in the first line:\n");
+                sb.append("\tThe following customer is in the first line:\n");
             }else{
-                sb.append("The following " + line1.size() + " customers are in the first line\n");
+                sb.append("\tThe following " + line1.size() + " customers are in the first line\n");
             }
             sb.append(line1.toString());
         }
         if(line2.size() == 0){
-            sb.append("No customers in the first line!\n");
+            sb.append("\tNo customers in the second line!\n");
         }else{
             if(line2.size() == 1){
-                sb.append("The following customer is in the first line:\n");
+                sb.append("\tThe following customer is in the second line:\n");
             }else{
-                sb.append("The following " + line2.size() + " customers are in the first line\n");
+                sb.append("\tThe following " + line2.size() + " customers are in the second line\n");
             }
             sb.append(line2.toString());
         }
         if(linep.size() == 0){
-            sb.append("No customers in the first line!\n");
+            sb.append("\tNo customers in the express line!\n");
         }else{
             if(linep.size() == 1){
-                sb.append("The following customer is in the first line:\n");
+                sb.append("\tThe following customer is in the express line:\n");
             }else{
-                sb.append("The following " + linep.size() + " customers are in the first line\n");
+                sb.append("\tThe following " + linep.size() + " customers are in the express line\n");
             }
             sb.append(linep.toString());
         }

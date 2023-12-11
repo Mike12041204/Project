@@ -53,6 +53,6 @@ public class Customer extends KeyedItem<String>
 
     public String toString()
     {
-        return "Customer " + getKey() + " party of " + size + " for " + movie + " movie.\n";
+        return "\tCustomer " + getKey() + " party of " + size + " for " + movie + " movie.\n";
     }
 }

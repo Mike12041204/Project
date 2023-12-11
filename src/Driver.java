@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.*;
 
 public class Driver 
 {
@@ -57,7 +56,7 @@ public class Driver
 
             switch(selection){
             case 0:
-                System.out.println("Exiting program...");
+                System.out.println("The Wonderful Movie Theater who earned $" + cinema.getEarnings() + " kicks out remaining customer and closes...\nGood Bye!");
                 return;
             case 1:
                 customerEnter(cinema);
@@ -93,7 +92,7 @@ public class Driver
         System.out.print(">>Enter customer name: ");
         String name = stdin.readLine().trim();
         System.out.println(name);
-        while(cinema.hasCustomerName(name) != 0){
+        while(cinema.hasCustomerName(name)){
             System.out.print("Customer " + name + " is already in the theater!\n" +
                                "Please specify a different name.\n" +
                                ">>Enter customer name: ");
@@ -107,12 +106,14 @@ public class Driver
         String movie = stdin.readLine().trim();
         System.out.println(movie);
         System.out.print(">>Is a child 11 or younger in this party(Y/N)? ");
-        boolean child = Boolean.parseBoolean(stdin.readLine().trim());
+        boolean child = (stdin.readLine().trim().equals("Y")) ? true : false;
         System.out.println((child) ? "Y" : "N");
 
         Customer customer = new Customer(size, name, movie, child);
 
-        cinema.enterLine(customer);
+        int lineEntered = cinema.enterLine(customer);
+
+        System.out.println("Customer " + name + " is in " + ((lineEntered == 0) ? "express" : ((lineEntered == 1) ? "first" : "second")) + " ticket line.");
     }
 
     private static void customerBuy(Cinema cinema, boolean firstBuy) throws Exception
@@ -146,14 +147,15 @@ public class Driver
         if(customer.getSize() > cinema.getTheater1().remainingSeats() && customer.getSize() > cinema.getTheater2().remainingSeats())
         {
             System.out.println("Sorry. Both movies are sold out. Good bye!");
+            System.out.println("Customer " + customer.getKey() + " has left the Movie Theater.");
             return;
         }
 
         // case desired theater full
         if((customer.getMovie().equals("Barbie") && customer.getSize() > cinema.getTheater1().remainingSeats()) || (customer.getMovie().equals("Oppenheimer") && customer.getSize() > cinema.getTheater2().remainingSeats())){
-            System.out.println("Sorry. This movie is sold out.\n" +
+            System.out.print("Sorry. This movie is sold out.\n" +
                                "Would you like to see the other movie(Y/N)? ");
-            boolean switchMovie = Boolean.parseBoolean(stdin.readLine().trim());
+            boolean switchMovie = (stdin.readLine().trim().equals("Y")) ? true : false;
             System.out.println((switchMovie) ? "Y" : "N");
 
             // switch desired movie to open movie
@@ -162,12 +164,15 @@ public class Driver
             }else if(customer.getMovie().equals("Oppenheimer") && switchMovie){
                 customer.setMovie("Barbie");
             }else{
+                System.out.println("Customer " + customer.getKey() + " has left the Movie Theater.");
                 return;
             }
         }
 
         // seat customer at selected theater
         cinema.seatCustomer(customer);
+
+        System.out.println(customer.getKey() + ", party of " + customer.getSize() + " has been seated in the " + customer.getMovie() + " Movie Theater.");
     }
 
     private static void customerLeave(Cinema cinema) throws Exception
@@ -183,32 +188,34 @@ public class Driver
         System.out.println(name);
 
         // case customer doesn't exist
-        if(cinema.hasCustomerName(name) == 0){
+        if(!cinema.hasCustomerName(name)){
             System.out.println("This customer is not in Movie Theater!");
             return;
         }
 
         // customer exists remove them
         cinema.exitCustomer(name);
+
+        System.out.println("Customer " + name + " has left the Movie Theater.");
     }
 
     private static void displayWaiting(Cinema cinema) throws Exception
     {
-        System.out.println(cinema.lineDetails());
+        System.out.print(cinema.lineDetails());
     }
 
     private static void displayBarbie(Cinema cinema) throws Exception
     {
-        System.out.println(cinema.theaterDetails(0));
+        System.out.print(cinema.theaterDetails(0));
     }
 
     private static void displayOppenheimer(Cinema cinema) throws Exception
     {
-        System.out.println(cinema.theaterDetails(1));
+        System.out.print(cinema.theaterDetails(1));
     }
 
     private static void displayTickets(Cinema cinema) throws Exception
     {
-        System.out.println(cinema.earningsDetails());
+        System.out.print(cinema.earningsDetails());
     }
 }

@@ -1,5 +1,3 @@
-import java.lang.invoke.StringConcatFactory;
-
 import Structures.*;
 
 public class Theater 
@@ -66,6 +64,7 @@ public class Theater
             remaining.push(seat);
             seats.remove(seat);
             seats.add(seat, null);
+            remainingSeats++;
         }
     }
 
@@ -80,7 +79,7 @@ public class Theater
         StringBuilder sb = new StringBuilder();
 
         for(int i = 0; i < seats.size(); i++){
-            sb.append("Row " + i/width + " seat " + i%width + ((seats.get(i) == null) ? " is free." : " used by " + seats.get(i) + "'s party."));
+            sb.append("Row " + (i/height+1) + " seat " + (i%height+1) + ((seats.get(i) == null) ? " is free." : " used by " + seats.get(i) + "'s party.") + "\n");
         }
 
         return sb.toString();
