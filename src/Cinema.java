@@ -1,5 +1,14 @@
 import Structures.AscendinglyOrderedList;
 
+/**
+ * The Cinema class is the encapsulating class for the movie theater representation.
+ * It is a class that contains all the subelements of the cinema like the theaters
+ * and the waiting lists. This class also provides methods for the driver to interact
+ * with the theater.
+ * 
+ * @author Michael Greenbaum and Duwon Ham
+ * @version 12/11/2023
+ */
 public class Cinema {
     private double pricerPerTicket;
     private int ticketCount1;
@@ -17,6 +26,16 @@ public class Cinema {
     // sorted list of all customers in cinema used to determine duplicate keys
     private AscendinglyOrderedList<Customer, String> existingCustomers;
 
+    /**
+     * Constrcutor for the cinema class initializes all the collection and sets the
+     * dimensions of the two theaters using parameters.
+     * 
+     * @param t1_width first theaters width
+     * @param t1_height first theaters height
+     * @param t2_width second theaters width
+     * @param t2_height second theaters height
+     * @param pricePerTicket cost per ticket
+     */
     public Cinema(int t1_width, int t1_height, int t2_width, int t2_height, double pricePerTicket)
     {
         ticketCount1 = 0;
@@ -34,12 +53,26 @@ public class Cinema {
         existingCustomers = new AscendinglyOrderedList<>();
     }
 
+    /**
+     * Sets the starting list from the three options.
+     * 
+     * @param order value 0 - 2 which represenents which list to start getting 
+     *              customers from
+     */
     public void setLineOrder(int order)
     {
         lineOrder = order;
     }
 
     // returns 0 if in p, 1 if in l1, 2 if in l2
+    /**
+     * Enters a customer into one of the lines, determines which of the lines to 
+     * insert the customer into based on whether the customers group has a child and
+     * the number of people in each list.
+     * 
+     * @param customer the customer to be inserted into a list
+     * @return the number of the line the customer was inserted into
+     */
     public int enterLine(Customer customer)
     {
         int result;
@@ -72,6 +105,12 @@ public class Cinema {
         return result;
     }
 
+    /**
+     * Gets the next customer in from one of the lists, gets from each list in a
+     * cyclical order.
+     * 
+     * @return the next customer in the order
+     */
     public Customer getNextCustomer()
     {
         Customer customer = null;
@@ -108,6 +147,11 @@ public class Cinema {
         return customer;
     }
 
+    /**
+     * Seats a customer into a theater and increases count of the tickets sold.
+     * 
+     * @param customer the customer who is being inserted into a theater
+     */
     public void seatCustomer(Customer customer)
     {
         if(customer.getMovie().equals("Barbie")){
@@ -121,11 +165,22 @@ public class Cinema {
         existingCustomers.add(customer);
     }
 
+    /**
+     * Returns whether the cinema already contains a customer of this name.
+     * 
+     * @param name of the customer being searched for
+     * @return whether the name was found or not
+     */
     public boolean hasCustomerName(String name)
     {
         return existingCustomers.search(name) > -1;
     }
 
+    /**
+     * Removes a customer from a theater.
+     * 
+     * @param customerName the name of the customer to be removed
+     */
     public void exitCustomer(String customerName)
     {
         if(theater1.hasName(customerName)){
@@ -137,6 +192,11 @@ public class Cinema {
         existingCustomers.remove(existingCustomers.search(customerName));
     }
 
+    /**
+     * Returns a formatted string of the customers contained within all lines.
+     * 
+     * @return the string of the lien information
+     */
     public String lineDetails()
     {
         StringBuilder sb = new StringBuilder();
@@ -175,6 +235,13 @@ public class Cinema {
         return sb.toString();
     }
 
+    /**
+     * Returns a formatted string with the information about customers contained
+     * within a certain theater, and the seating locations.
+     * 
+     * @param theater the theater which seats are to be inspected
+     * @return the string of the theaters seats and respective customers
+     */
     public String theaterDetails(int theater)
     {
         StringBuilder sb = new StringBuilder();
@@ -190,6 +257,11 @@ public class Cinema {
         return sb.toString();
     }
 
+    /**
+     * Returns a formatted string of the sales and income of the theater.
+     * 
+     * @return the string of sales information
+     */
     public String earningsDetails()
     {
         StringBuilder sb = new StringBuilder();
@@ -201,26 +273,51 @@ public class Cinema {
         return sb.toString();
     }
 
+    /**
+     * Gets the total earnings of the cinema.
+     * 
+     * @return the overall earnings
+     */
     public double getEarnings()
     {
         return (ticketCount1 + ticketCount2) * pricerPerTicket;
     }
 
+    /**
+     * Determines whether all of the cinemas lines are empty.
+     * 
+     * @return whether all lines are empty
+     */
     public boolean linesEmpty()
     {
         return line1.empty() && line2.empty() && linep.empty();
     }
 
+    /**
+     * Gets whether all cinema theaters are empty.
+     * 
+     * @return whether the theaters are empty
+     */
     public boolean theatersEmpty()
     {
         return theater1.isEmpty() && theater2.isEmpty();
     }
 
+    /**
+     * Gets the first theater.
+     * 
+     * @return the first theater
+     */
     public Theater getTheater1()
     {
         return theater1;
     }
 
+    /**
+     * Gets the second theater.
+     * 
+     * @return the second theater
+     */
     public Theater getTheater2()
     {
         return theater2;
