@@ -55,7 +55,7 @@ public class Theater
     {
         for(int i = 0; i < size; i++)
         {
-            remaining.push(i);
+            remaining.push(size - i - 1);
             seats.add(i, null);
         }
     }
