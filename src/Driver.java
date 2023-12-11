@@ -1,8 +1,24 @@
 import java.io.*;
 
+/**
+ * The driver class provides the menu interface to allow the user to test and apply
+ * the movie theater simulation. The driver allows the user to modify and read the
+ * movie theater.
+ * 
+ * @author Michael Greenbaum and Duwon ham
+ * @version 12/11/2023
+ */
 public class Driver 
 {
     private static BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+    
+    /**
+     * The main method prints the menu and repeadly prompts the user for input until
+     * they quit.
+     * 
+     * @param args command line input, not used
+     * @throws Exception thrown from reading input
+     */
     public static void main(String[] args) throws Exception 
     {
         System.out.println("Welcome to the Wonderful Movie Theater program!\n" + 
@@ -87,6 +103,13 @@ public class Driver
         }
     }
 
+    /**
+     * Allows for a new customer to enter the cinema. Gathers information for the
+     * customer then inserts them into a line at the cinema.
+     * 
+     * @param cinema the cinema for the customers to enter
+     * @throws Exception thrown when reading input
+     */
     private static void customerEnter(Cinema cinema) throws Exception
     {
         System.out.print(">>Enter customer name: ");
@@ -116,6 +139,14 @@ public class Driver
         System.out.println("Customer " + name + " is in " + ((lineEntered == 0) ? "express" : ((lineEntered == 1) ? "first" : "second")) + " ticket line.");
     }
 
+    /**
+     * Allows the customers at the cinema to purchase a ticket. If their desired 
+     * theater is full they can choose to get to the other if open.
+     * 
+     * @param cinema the cinema the customers are entering
+     * @param firstBuy whether this is the first tickets being purchased
+     * @throws Exception thrown when reading input
+     */
     private static void customerBuy(Cinema cinema, boolean firstBuy) throws Exception
     {
         if(firstBuy){
@@ -175,6 +206,13 @@ public class Driver
         System.out.println(customer.getKey() + ", party of " + customer.getSize() + " has been seated in the " + customer.getMovie() + " Movie Theater.");
     }
 
+    /**
+     * Allows a customer to leave the input remvoignt their information from the
+     * repective theater.
+     * 
+     * @param cinema the cinema the customers are leaving
+     * @throws Exception thrown when reading input
+     */
     private static void customerLeave(Cinema cinema) throws Exception
     {
         // case no customers
@@ -199,21 +237,46 @@ public class Driver
         System.out.println("Customer " + name + " has left the Movie Theater.");
     }
 
+    /**
+     * Displays the customers waiting in line for a theater at the cinema.
+     * 
+     * @param cinema the cinema the customers are waiting at
+     * @throws Exception thrown when reading input
+     */
     private static void displayWaiting(Cinema cinema) throws Exception
     {
         System.out.print(cinema.lineDetails());
     }
 
+    /**
+     * Display information about the Barbie theater and the customers within it.
+     * 
+     * @param cinema the cinema with the Barbie theater
+     * @throws Exception thrown when reading input
+     */
     private static void displayBarbie(Cinema cinema) throws Exception
     {
         System.out.print(cinema.theaterDetails(0));
     }
 
+    /**
+     * Display information about the Oppenheimer theater and the customers within it.
+     * 
+     * @param cinema the cinema with the Oppenheimer theater
+     * @throws Exception thrown when reading input
+     */
     private static void displayOppenheimer(Cinema cinema) throws Exception
     {
         System.out.print(cinema.theaterDetails(1));
     }
 
+    /**
+     * Display information about the number of tickets sold for each movie and the 
+     * total money made.
+     * 
+     * @param cinema the cinema where the tickets were sold at
+     * @throws Exception thrown when reading input
+     */
     private static void displayTickets(Cinema cinema) throws Exception
     {
         System.out.print(cinema.earningsDetails());
