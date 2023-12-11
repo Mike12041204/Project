@@ -1,5 +1,15 @@
 import Structures.*;
 
+/**
+ * The theater class represents one of the screens and seating used to view a movie
+ * and contain its audience. The theater has a simple list of names to indicate who
+ * is sitting where in the theater. Beyond this it has a sorted list of customers
+ * which can be used to retrieve customers leaving the theater adn get their locations
+ * quickly. The theater also has a stack containing the index of all empty seats.
+ * 
+ * @author Michael Greenbaum and Duwon Ham
+ * @version 12/11/2023
+ */
 public class Theater 
 {
     private String name;
@@ -12,6 +22,15 @@ public class Theater
     private AscendinglyOrderedList<Customer, String> locations;
     private Stack<Integer> remaining;
 
+    /**
+     * The constructor for the theater class initializes the size of the theater using
+     * parameters. It also allocates all of the data structures used by the theater.
+     * The data structures are also initialized to contain default values.
+     * 
+     * @param width the width of the theater
+     * @param height the height of the theater
+     * @param name the name of the theater
+     */
     public Theater(int width, int height, String name)
     {
         this.width = width;
@@ -28,6 +47,10 @@ public class Theater
         initialize();
     }
 
+    /**
+     * Helper method used by the constructor to initialize the data structures of
+     * the class to contain default values.
+     */
     private void initialize()
     {
         for(int i = 0; i < size; i++)
@@ -37,11 +60,24 @@ public class Theater
         }
     }
 
+    /**
+     * Gets whether the theater contains a certain customer name.
+     * 
+     * @param name the name to be searched for
+     * @return whether the name was found or not
+     */
     public boolean hasName(String name)
     {
         return locations.search(name) > -1;
     }
 
+    /**
+     * Adds a customer to the theater and updates the data structures to reprsenent
+     * this. Also initializes the positions list in the customer to keep track of its
+     * groups position within the theater.
+     * 
+     * @param customer the customer who is entering the theater
+     */
     public void enterTheater(Customer customer)
     {
         for(int i = 0; i < customer.getSize(); i++){
@@ -54,6 +90,12 @@ public class Theater
         locations.add(customer);
     }
 
+    /**
+     * Removes a customer from the theater and updates the data structures to represent
+     * this.
+     * 
+     * @param customerName the name of the customer who is leaving the theater
+     */
     public void exitTheater(String customerName)
     {
         int location = locations.search(customerName);
@@ -68,12 +110,21 @@ public class Theater
         }
     }
 
-    //check if there is an empty seat, returning boolean might help but for groups coming in, returning int is better
+    /**
+     * Gets the number of empty seats in the theater.
+     * 
+     * @return the number of available seats
+     */
     public int remainingSeats()
     {
         return remainingSeats;
     }
 
+    /**
+     * Returns a formatted string indicating the seating arrangement of the theater.
+     * 
+     * @return the string of the seating positions
+     */
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
@@ -85,11 +136,21 @@ public class Theater
         return sb.toString();
     }
 
+    /**
+     * Gets the name of the movie being played at the theater.
+     * 
+     * @return the name of the movie
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     * Gets whether the theater is empty or not.
+     * 
+     * @return whether the theater is empty
+     */
     public boolean isEmpty()
     {
         return remainingSeats == size;
