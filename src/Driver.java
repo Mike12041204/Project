@@ -3,10 +3,13 @@
 // - do we need Line class?
 // - should we have CustomerPositions class?
 
-public class Driver {
-    public static void main(String[] args) throws Exception {
-        Cinema cinema;
+public class Driver 
+{
 
-        cinema = new Cinema(3, 3, 3, 3);
+    private static
+    public static void main(String[] args) throws Exception {
+        Cinema cinema = new Cinema(3,3,3,3);
+
+
     }
 }
