@@ -45,4 +45,14 @@ public class Customer extends KeyedItem<String>
     {
         positions.add(index, seat);
     }
+
+    public int getSeat(int index)
+    {
+        return positions.get(index);
+    }
+
+    public String toString()
+    {
+        return "Customer " + getKey() + " party of " + size + " for " + movie + " movie.\n";
+    }
 }

@@ -31,4 +31,9 @@ public class Line {
     {
         return size;
     }
+
+    public String toString()
+    {
+        return train.toString();
+    }
 }

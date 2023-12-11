@@ -48,11 +48,25 @@ public class Theater
     {
         for(int i = 0; i < customer.getSize(); i++){
             int seat = remaining.pop();
+            seats.remove(seat);
             seats.add(seat, customer.getKey());
             customer.addSeat(i, seat);
             remainingSeats--;
         }
         locations.add(customer);
+    }
+
+    public void exitTheater(String customerName)
+    {
+        int location = locations.search(customerName);
+        Customer customer = locations.get(location);
+
+        for(int i = 0; i < customer.getSize(); i++){
+            int seat = customer.getSeat(i);
+            remaining.push(seat);
+            seats.remove(seat);
+            seats.add(seat, null);
+        }
     }
 
     //check if there is an empty seat, returning boolean might help but for groups coming in, returning int is better
@@ -64,7 +78,10 @@ public class Theater
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        //code for tostring method
+
+        for(int i = 0; i < seats.size(); i++){
+            sb.append("Row " + i/width + " seat " + i%width + ((seats.get(i) == null) ? " is free." : " used by " + seats.get(i) + "'s party."));
+        }
 
         return sb.toString();
     }
@@ -72,5 +89,10 @@ public class Theater
     public String getName()
     {
         return name;
+    }
+
+    public boolean isEmpty()
+    {
+        return remainingSeats == size;
     }
 }

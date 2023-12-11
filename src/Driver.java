@@ -1,10 +1,5 @@
-// NOTES
-// - do we need Cinema class?
-// - do we need Line class?
-// - should we have CustomerPositions class?
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.*;
 
 public class Driver 
 {
@@ -98,7 +93,7 @@ public class Driver
         System.out.print(">>Enter customer name: ");
         String name = stdin.readLine().trim();
         System.out.println(name);
-        while(cinema.hasCustomerName(name)){
+        while(cinema.hasCustomerName(name) != 0){
             System.out.print("Customer " + name + " is already in the theater!\n" +
                                "Please specify a different name.\n" +
                                ">>Enter customer name: ");
@@ -150,7 +145,7 @@ public class Driver
         // case full theaters
         if(customer.getSize() > cinema.getTheater1().remainingSeats() && customer.getSize() > cinema.getTheater2().remainingSeats())
         {
-            System.out.println("Sorry. Both movies are sold out. Goodbye!");
+            System.out.println("Sorry. Both movies are sold out. Good bye!");
             return;
         }
 
@@ -177,26 +172,43 @@ public class Driver
 
     private static void customerLeave(Cinema cinema) throws Exception
     {
+        // case no customers
+        if(cinema.theatersEmpty()){
+            System.out.println("No customers are in the movie theater at this time.");
+            return;
+        }
 
+        System.out.print(">>Enter customer name to leave Movie Theater: ");
+        String name = stdin.readLine().trim();
+        System.out.println(name);
+
+        // case customer doesn't exist
+        if(cinema.hasCustomerName(name) == 0){
+            System.out.println("This customer is not in Movie Theater!");
+            return;
+        }
+
+        // customer exists remove them
+        cinema.exitCustomer(name);
     }
 
     private static void displayWaiting(Cinema cinema) throws Exception
     {
-
+        System.out.println(cinema.lineDetails());
     }
 
     private static void displayBarbie(Cinema cinema) throws Exception
     {
-
+        System.out.println(cinema.theaterDetails(0));
     }
 
     private static void displayOppenheimer(Cinema cinema) throws Exception
     {
-
+        System.out.println(cinema.theaterDetails(1));
     }
 
     private static void displayTickets(Cinema cinema) throws Exception
     {
-
+        System.out.println(cinema.earningsDetails());
     }
 }
