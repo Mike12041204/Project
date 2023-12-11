@@ -34,14 +34,14 @@ public class Driver
         double pricePer = 0;
 
         System.out.print("Please specify the size of the Movie Theaters\n" +
-                         "\t\tEnter information abot the Oppenheimer Movie Theater:\n" +
+                         "\t\t>>Enter information about the Oppenheimer Movie Theater:\n" +
                          "\t\t\t>>Enter number of rows: ");
         rows1 = Integer.parseInt(stdin.readLine().trim());
         System.out.println(rows1);
         System.out.print("\t\t\t>>Enter number of seats in a row: ");
         seats1 = Integer.parseInt(stdin.readLine().trim());
         System.out.println(seats1);
-        System.out.print("\t\tEnter information abot the Barbie Movie Theater:\n" +
+        System.out.print("\t\t>>Enter information about the Barbie Movie Theater:\n" +
                          "\t\t\t>>Enter number of rows: ");
         rows2 = Integer.parseInt(stdin.readLine().trim());
         System.out.println(rows2);
@@ -55,24 +55,22 @@ public class Driver
         cinema = new Cinema(rows2, seats2, rows1, seats1, pricePer);
         boolean firstBuy = true;
 
-        System.out.println("Select an operation from the following menu\n" +
+        System.out.println("\nSelect an operation from the following menu\n" +
                            "\t\t\t0. End the program.\n" +
                            "\t\t\t1. Customer(s) enter(s) Movie Theater.\n" +
                            "\t\t\t2. Customer buys ticket(s).\n" +
                            "\t\t\t3. Customer(s) leave(s) the theater.\n" +
                            "\t\t\t4. Display info about customers waiting for tickets.\n" +
-                           "\t\t\t5. Display seating chart for Babrie Movie Theater\n" +
-                           "\t\t\t6. Display the seating chart for the Oppenheimer Movie Theater.\n" +
+                           "\t\t\t5. Display seating chart for Barbie Movie Theater\n" +
+                           "\t\t\t6. Display the seating chart for Oppenheimer Movie Theater.\n" +
                            "\t\t\t7. Display number of tickets sold and total earnings.\n");
-
+        System.out.print(">>Make your menu selection now: ");
+        int selection = Integer.parseInt(stdin.readLine().trim());
+        System.out.println(selection);
         while(true){
-            System.out.print(">>Make your menu selection now: ");
-            int selection = Integer.parseInt(stdin.readLine().trim());
-            System.out.println(selection);
-
             switch(selection){
             case 0:
-                System.out.println("The Wonderful Movie Theater who earned $" + cinema.getEarnings() + " kicks out remaining customer and closes...\nGood Bye!");
+                System.out.println("The Wonderful Movie Theater who earned $" + cinema.getEarnings() + " kicks out remaining customers and closes...\nGood Bye!");
                 return;
             case 1:
                 customerEnter(cinema);
@@ -98,8 +96,10 @@ public class Driver
             case 7:
                 displayTickets(cinema);
             }
-
             System.out.println();
+            System.out.print(">>You know the options. Make your menu selection now: ");
+            selection = Integer.parseInt(stdin.readLine().trim());
+            System.out.println(selection);
         }
     }
 
@@ -150,7 +150,7 @@ public class Driver
     private static void customerBuy(Cinema cinema, boolean firstBuy) throws Exception
     {
         if(firstBuy){
-            System.out.print("Which line would you like to serve customers first? (Express/Reg1/Reg2): ");
+            System.out.print("Which line would you like to serve customers first? (Express/Reg1/Reg2):");
             String first = stdin.readLine().trim();
             System.out.println(first);
 

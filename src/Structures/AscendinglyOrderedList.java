@@ -44,7 +44,8 @@ public class AscendinglyOrderedList<T extends KeyedItem<KT>, KT extends Comparab
 
     /**
      * Add an item to the collection. Method will resize the collection if the collection is full when adding.
-     * The method will also call the search method to find the proper place in the collection for the item to be
+     * The method will also call the 
+     *  method to find the proper place in the collection for the item to be
      * inserted that maintains the ordering.
      *
      * @param the item to be inserted into the collection

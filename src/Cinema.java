@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 import Structures.AscendinglyOrderedList;
 
 /**
@@ -276,7 +278,8 @@ public class Cinema {
 
         sb.append(ticketCount1 + " tickets have been sold for the Barbie Movie.\n");
         sb.append(ticketCount2 + " tickets have been sold for the Oppenheimer Movie.\n");
-        sb.append("Total earnings: " + getEarnings() + "\n");
+        DecimalFormat df = new DecimalFormat("0.##");
+        sb.append("Total earnings: " + df.format(getEarnings()) + "\n");
 
         return sb.toString();
     }
