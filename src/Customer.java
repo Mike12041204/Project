@@ -1,29 +1,24 @@
 import Structures.*;
 
-public class Customer 
+public class Customer extends KeyedItem<String>
 {
+    // key is name
+
     private int size;
-    private String name;
     private String movie;
     private boolean hasChild;
     
     private List<Integer> positions;
 
-    public Customer(int groupSize, String name, String movie, boolean child)
+    public Customer(int groupSize, String name, String movie, boolean hasChild)
     {
-        this.size = groupSize;
-        this.name = name;
-        this.movie = movie;
-        positions = new List<>();
-        hasChild = child;
-    }
+        super(name);
 
-    public Customer(int size, String name, Boolean child)
-    {
-        this.size = size;
-        this.name = name;
+        this.size = groupSize;
+        this.movie = movie;
+        this.hasChild = hasChild;
+
         positions = new List<>();
-        hasChild = child;
     }
 
     public int getSize()
@@ -31,12 +26,17 @@ public class Customer
         return size;
     }
 
-    public String getName()
+    public String getMovie()
     {
-        return name;
+        return movie;
     }
 
-    public boolean hasChild()
+    public void setMovie(String movie)
+    {
+        this.movie = movie;
+    }
+
+    public boolean getHasChild()
     {
         return hasChild;
     }

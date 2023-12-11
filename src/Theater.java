@@ -1,6 +1,8 @@
+import java.lang.invoke.StringConcatFactory;
+
 import Structures.*;
 
-public class Theatre 
+public class Theater 
 {
     private String name;
     private int size;
@@ -9,10 +11,10 @@ public class Theatre
     private int remainingSeats;
 
     private List<String> seats;
-    private List<Customer> locations;
+    private AscendinglyOrderedList<Customer, String> locations;
     private Stack<Integer> remaining;
 
-    public Theatre(int width, int height, String name)
+    public Theater(int width, int height, String name)
     {
         this.width = width;
         this.height = height;
@@ -21,7 +23,7 @@ public class Theatre
         remainingSeats = size;
 
         seats = new List<>();
-        locations = new List<>();
+        locations = new AscendinglyOrderedList<>();
         remaining = new Stack<>();
 
         // populate seats with empty
@@ -37,23 +39,26 @@ public class Theatre
         }
     }
 
-    //returns a remaining seat
-    public int getSeat()
+    public boolean hasName(String name)
     {
-        return remaining.pop();
+        return locations.search(name) > -1;
+    }
+
+    public void enterTheater(Customer customer)
+    {
+        for(int i = 0; i < customer.getSize(); i++){
+            int seat = remaining.pop();
+            seats.add(seat, customer.getKey());
+            customer.addSeat(i, seat);
+            remainingSeats--;
+        }
+        locations.add(customer);
     }
 
     //check if there is an empty seat, returning boolean might help but for groups coming in, returning int is better
     public int remainingSeats()
     {
-        //code to get remaining seats
-        return -1; //place holder
-    }
-
-    public void binaryAddLocation(Customer customer)
-    {
-        //code to find the index
-        locations.add(-1, customer); //replace -1 with the found index
+        return remainingSeats;
     }
 
     public String toString()

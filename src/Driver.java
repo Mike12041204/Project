@@ -11,7 +11,7 @@ public class Driver
     private static BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
     public static void main(String[] args) throws Exception 
     {
-        System.out.println("Welcome to the Wonderful Movie Theatre program!\n" + 
+        System.out.println("Welcome to the Wonderful Movie Theater program!\n" + 
                              "\tTonight's features are:\n" + 
                              "\t\t\"Barbie\" and \"Oppenheimer\"\n");
 
@@ -98,6 +98,13 @@ public class Driver
         System.out.print(">>Enter customer name: ");
         String name = stdin.readLine().trim();
         System.out.println(name);
+        while(cinema.hasCustomerName(name)){
+            System.out.print("Customer " + name + " is already in the theater!\n" +
+                               "Please specify a different name.\n" +
+                               ">>Enter customer name: ");
+            name = stdin.readLine().trim();
+            System.out.println(name);
+        }
         System.out.print(">>Enter party size: ");
         int size = Integer.parseInt(stdin.readLine().trim());
         System.out.println(size);
@@ -117,7 +124,7 @@ public class Driver
     {
         if(firstBuy){
             System.out.print("Which line would you like to serve customers first? (Express/Reg1/Reg2): ");
-            String first = stdin.readLine();
+            String first = stdin.readLine().trim();
             System.out.println(first);
 
             if(first.equals("Express")){
@@ -132,10 +139,40 @@ public class Driver
         // case no customers
         if(cinema.linesEmpty()){
             System.out.println("There are no customers waiting in any line.");
+            return;
         }
 
+        // get customer
+        Customer customer = cinema.getNextCustomer();
+
+        System.out.println("Serving customer " + customer.getKey());
+
         // case full theaters
-        
+        if(customer.getSize() > cinema.getTheater1().remainingSeats() && customer.getSize() > cinema.getTheater2().remainingSeats())
+        {
+            System.out.println("Sorry. Both movies are sold out. Goodbye!");
+            return;
+        }
+
+        // case desired theater full
+        if((customer.getMovie().equals("Barbie") && customer.getSize() > cinema.getTheater1().remainingSeats()) || (customer.getMovie().equals("Oppenheimer") && customer.getSize() > cinema.getTheater2().remainingSeats())){
+            System.out.println("Sorry. This movie is sold out.\n" +
+                               "Would you like to see the other movie(Y/N)? ");
+            boolean switchMovie = Boolean.parseBoolean(stdin.readLine().trim());
+            System.out.println((switchMovie) ? "Y" : "N");
+
+            // switch desired movie to open movie
+            if(customer.getMovie().equals("Barbie") && switchMovie){
+                customer.setMovie("Oppenheimer");
+            }else if(customer.getMovie().equals("Oppenheimer") && switchMovie){
+                customer.setMovie("Barbie");
+            }else{
+                return;
+            }
+        }
+
+        // seat customer at selected theater
+        cinema.seatCustomer(customer);
     }
 
     private static void customerLeave(Cinema cinema) throws Exception
