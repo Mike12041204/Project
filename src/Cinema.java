@@ -14,16 +14,24 @@ public class Cinema {
     private int ticketCount1;
     private int ticketCount2;
 
+    
     private Line line1;
     private Line line2;
     private Line linep;
     private Theater theater1;
     private Theater theater2;
     
-    // line order is 1 -> 2 -> P
+    /**
+     * line order rotates in cyle: 1 -> 2 -> P, and back to 1. The lineOrder is initialized by the user of the program as 1, 2, or p.
+     */
     private int lineOrder;
 
-    // sorted list of all customers in cinema used to determine duplicate keys
+    // 
+    /**
+     * sorted list of all customers in cinema used to determine duplicate keys, and efficiently find the customer given the String key.
+     * String key : The name of the customer
+     * Customer customer : the Customer object that extends KeyedItem class.
+     */
     private AscendinglyOrderedList<Customer, String> existingCustomers;
 
     /**
