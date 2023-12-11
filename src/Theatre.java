@@ -6,16 +6,19 @@ public class Theatre
     private int size;
     private int width;
     private int height;
+    private int remainingSeats;
 
     private List<String> seats;
     private List<Customer> locations;
     private Stack<Integer> remaining;
 
-    public Theatre(int width, int height)
+    public Theatre(int width, int height, String name)
     {
         this.width = width;
         this.height = height;
+        this.name  = name;
         size = width * height;
+        remainingSeats = size;
 
         seats = new List<>();
         locations = new List<>();

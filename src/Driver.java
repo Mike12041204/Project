@@ -43,6 +43,7 @@ public class Driver
         System.out.println(pricePer);
 
         cinema = new Cinema(rows2, seats2, rows1, seats1, pricePer);
+        boolean firstBuy = true;
 
         System.out.println("Select an operation from the following menu\n" +
                            "\t\t\t0. End the program.\n" +
@@ -67,7 +68,10 @@ public class Driver
                 customerEnter(cinema);
                 break;
             case 2:
-                customerBuy(cinema);
+                customerBuy(cinema, firstBuy);
+                if(firstBuy){
+                    firstBuy = false;
+                }
                 break;
             case 3:
                 customerLeave(cinema);
@@ -98,16 +102,40 @@ public class Driver
         int size = Integer.parseInt(stdin.readLine().trim());
         System.out.println(size);
         System.out.print(">>Enter movie name: ");
-        int movie = Integer.parseInt(stdin.readLine().trim());
+        String movie = stdin.readLine().trim();
         System.out.println(movie);
         System.out.print(">>Is a child 11 or younger in this party(Y/N)? ");
         boolean child = Boolean.parseBoolean(stdin.readLine().trim());
         System.out.println((child) ? "Y" : "N");
+
+        Customer customer = new Customer(size, name, movie, child);
+
+        cinema.enterLine(customer);
     }
 
-    private static void customerBuy(Cinema cinema) throws Exception
+    private static void customerBuy(Cinema cinema, boolean firstBuy) throws Exception
     {
+        if(firstBuy){
+            System.out.print("Which line would you like to serve customers first? (Express/Reg1/Reg2): ");
+            String first = stdin.readLine();
+            System.out.println(first);
 
+            if(first.equals("Express")){
+                cinema.setLineOrder(2);
+            }else if(first.equals("Reg1")){
+                cinema.setLineOrder(0);
+            }else{
+                cinema.setLineOrder(1);
+            }
+        }
+
+        // case no customers
+        if(cinema.linesEmpty()){
+            System.out.println("There are no customers waiting in any line.");
+        }
+
+        // case full theaters
+        
     }
 
     private static void customerLeave(Cinema cinema) throws Exception

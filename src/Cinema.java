@@ -8,6 +8,7 @@ public class Cinema {
     private Theatre theatre1;
     private Theatre theatre2;
     
+    // line order is 1 -> 2 -> P
     private int lineOrder;
 
     public Cinema(int t1_width, int t1_height, int t2_width, int t2_height, double pricePerTicket)
@@ -19,8 +20,13 @@ public class Cinema {
         line1 = new Line();
         line2 = new Line();
         linep = new Line();
-        theatre1 = new Theatre(t1_width, t1_height);
-        theatre2 = new Theatre(t2_width, t2_height);
+        theatre1 = new Theatre(t1_width, t1_height, "Barbie");
+        theatre2 = new Theatre(t2_width, t2_height, "Oppenheimer");
+    }
+
+    public void setLineOrder(int order)
+    {
+        lineOrder = order;
     }
 
     public void enterLine(Customer customer)
@@ -52,19 +58,19 @@ public class Cinema {
         while(customer == null) //have not tested it yet, also we have to make sure leave() method is not called when there are 0 customers in the lines
         {
             switch (lineOrder) {
-                case 1:
+                case 0:
                     if(!line1.empty())
                     {
                         customer = line1.leave();
                         break;
                     }
-                case 2:
+                case 1:
                     if(!line2.empty())
                     {
                         customer = line2.leave();
                         break;
                     }
-                case 3:
+                case 2:
                     if(!linep.empty())
                     {
                         customer = linep.leave();
@@ -73,7 +79,7 @@ public class Cinema {
                 default:
                     lineOrder = 0;
             }
-            lineOrder = (lineOrder % 3) + 1;
+            lineOrder = (lineOrder + 1) % 3;
         }
         switch(theater)
         {
@@ -122,6 +128,11 @@ public class Cinema {
             default:
                 break;
         }
+    }
+
+    public boolean linesEmpty()
+    {
+        return line1.empty() && line2.empty() && linep.empty();
     }
 
     public Theatre getTheatre1()
