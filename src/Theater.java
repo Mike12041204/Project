@@ -18,8 +18,16 @@ public class Theater
     private int height;
     private int remainingSeats;
 
+    /**
+     * seats are 
+     */
     private List<String> seats;
     private AscendinglyOrderedList<Customer, String> locations;
+
+    /**
+     * A Stack to store all the remaining seats, stored as integers. Seats are poped when customer buys ticket based on the group number, and 
+     * pushed back in the stack when customers leave the theater.
+     */
     private Stack<Integer> remaining;
 
     /**
