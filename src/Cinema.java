@@ -1,5 +1,6 @@
 public class Cinema {
     private int earnings;
+    private double pricerPerTicket;
 
     private Line line1;
     private Line line2;
@@ -9,10 +10,11 @@ public class Cinema {
     
     private int lineOrder;
 
-    public Cinema(int t1_width, int t1_height, int t2_width, int t2_height)
+    public Cinema(int t1_width, int t1_height, int t2_width, int t2_height, double pricePerTicket)
     {
         earnings = 0;
         lineOrder = 0;
+        this.pricerPerTicket = pricePerTicket;
 
         line1 = new Line();
         line2 = new Line();
@@ -26,7 +28,7 @@ public class Cinema {
         int s1 = line1.size();
         int s2 = line2.size();
         int s3 = linep.size();
-        if(customer.hasChild() && s3<<1 < s1 && s3<<1 < s2)
+        if(customer.hasChild() && s3 >= s1<<1 && s3 >= s2<<1)
         {
             linep.enter(customer);
         }
@@ -120,5 +122,15 @@ public class Cinema {
             default:
                 break;
         }
+    }
+
+    public Theatre getTheatre1()
+    {
+        return theatre1;
+    }
+
+    public Theatre getTheatre2()
+    {
+        return theatre2;
     }
 }

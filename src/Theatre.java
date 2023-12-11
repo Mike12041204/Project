@@ -1,6 +1,8 @@
 import Structures.*;
 
-public class Theatre {
+public class Theatre 
+{
+    private String name;
     private int size;
     private int width;
     private int height;
@@ -57,5 +59,10 @@ public class Theatre {
         //code for tostring method
 
         return sb.toString();
+    }
+
+    public String getName()
+    {
+        return name;
     }
 }
