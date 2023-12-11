@@ -48,7 +48,7 @@ public class Cinema {
         int s2 = line2.size();
         int s3 = linep.size();
         // UNSURE - ensure this condition is correct
-        if(customer.getHasChild() && (s1 > s3 / 2 || s2 > s3 / 2)) 
+        if(customer.getHasChild() && (s1 >= (double)s3 / 2.0 && s2 >= (double)s3 / 2.0))
         {
             linep.enter(customer);
             result = 0;
